@@ -7,6 +7,15 @@ Redmine::Plugin.register :computed_custom_field do
   settings default: {}
 end
 
+if Rails::VERSION::MAJOR >= 5
+  version = "#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}".to_f
+  PLUGIN_MIGRATION_CLASS = ActiveRecord::Migration[version]
+  preparation_class = ActiveSupport::Reloader
+else
+  PLUGIN_MIGRATION_CLASS = ActiveRecord::Migration
+  preparation_class = ActionDispatch::Callbacks
+end
+
 $LOAD_PATH.unshift "#{File.dirname(__FILE__)}/lib"
 require 'computed_custom_field'
 #require 'computed_custom_field/custom_field_patch'
