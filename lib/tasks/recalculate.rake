@@ -16,8 +16,11 @@ namespace :computed_custom_field do
     before = computed_fields_snapshot(issue, cf_ids)
     issue.send(:eval_computed_fields) # recalculate
     after  = computed_fields_snapshot(issue, cf_ids)
+    changed = before != after
 
-    before != after
+    issue.reload if changed
+
+    changed
   end
 
   def save_issue(issue)
@@ -34,6 +37,9 @@ namespace :computed_custom_field do
 
   desc 'Recalculate computed custom fields for existing issues'
   task :recalculate => :environment do
+    unless Issue.private_method_defined?(:eval_computed_fields)
+      abort "[CCF recalc] eval_computed_fields not found."
+    end
     projects =
       if ENV['project_id'].present?
         Project.where(id: ENV['project_id'])
