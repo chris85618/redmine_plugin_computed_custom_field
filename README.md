@@ -49,6 +49,13 @@ Run migrations
 rake redmine:plugins:migrate
 ```
 
+### Full Recaculation
+
+Recaculate for all issues
+```sh
+RAILS_ENV=production rake computed_custom_field:recalculate
+```
+
 ### Migration:
 - Navigate to plugin folder.
 - Run `git pull`
