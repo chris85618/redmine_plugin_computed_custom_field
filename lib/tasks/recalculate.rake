@@ -25,7 +25,11 @@ namespace :computed_custom_field do
   def save_issue(issue)
     issue.children.each { |child| save_issue(child) }
     issue.reload
-    issue.save! if computed_fields_changed?(issue)
+
+    if computed_fields_changed?(issue)
+      issue.save!
+      Rails.logger.info "[CCF recalc] Issue ##{issue.id} computed fields changed"
+    end
   rescue => e
     Rails.logger.error "[CCF recalc] Issue ##{issue.id} failed: #{e.message}"
   end
