@@ -16,7 +16,7 @@ namespace :computed_custom_field do
     return false if cf_ids.empty?
 
     before = computed_fields_snapshot(issue, cf_ids)
-    issue.valid? # before_validation recaculation without writing DB
+    issue.send(:eval_computed_fields) # recalculate
     after  = computed_fields_snapshot(issue, cf_ids)
 
     before != after
