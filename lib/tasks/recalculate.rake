@@ -6,9 +6,7 @@ namespace :computed_custom_field do
   end
 
   def computed_fields_snapshot(issue, cf_ids)
-    cf_ids.each_with_object({}) do |cf_id, snapshot|
-      snapshot[cf_id] = issue.custom_field_value(cf_id)
-    end
+    cf_ids.index_with { |id| issue.custom_field_value(id) }
   end
 
   def computed_fields_changed?(issue)
