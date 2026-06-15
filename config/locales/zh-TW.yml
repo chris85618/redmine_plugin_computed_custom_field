@@ -1,0 +1,5 @@
+zh-TW:
+  field_is_computed: 動態計算變數
+  field_formula: 公式
+  label_available_custom_fields: 可用自訂欄位
+  error_while_formula_computing: '公式使用此欄位："%{custom_field_name}" 計算時出錯: %{message}'
